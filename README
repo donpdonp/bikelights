@@ -4,6 +4,9 @@ the bicycle.
 
 Position        LEDs         Teensy PIN
 
+On-Board       Orange        D6
+Teensy
+
 In front of    White         D4
 Handlebars     White         D4
 
@@ -15,3 +18,4 @@ right side     Tri:red       E0
 
 Top-back of    Red left      F6
 bucket         Red right     F7
+
