@@ -1,0 +1,17 @@
+My bicycle runs a Teensy++ board powered by a lead-acid battery.
+A number of LEDs are wired to the board and taped to parts of
+the bicycle.
+
+Position        LEDs         Teensy PIN
+
+In front of    White         D4
+Handlebars     White         D4
+
+Front fork,    Tri:green     E0
+left side      Tri:red       E1
+
+Front fork,    Tri:green     E1
+right side     Tri:red       E0
+
+Top-back of    Red           D6
+bucket         Red           D6
