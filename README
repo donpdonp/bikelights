@@ -7,11 +7,11 @@ Position        LEDs         Teensy PIN
 In front of    White         D4
 Handlebars     White         D4
 
-Front fork,    Tri:green     E0
-left side      Tri:red       E1
+Front fork,    Tri:green     D2
+left side      Tri:red       D3
 
 Front fork,    Tri:green     E1
 right side     Tri:red       E0
 
-Top-back of    Red           D6
-bucket         Red           D6
+Top-back of    Red left      F6
+bucket         Red right     F7
