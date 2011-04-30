@@ -6,6 +6,9 @@
 #include <avr/pgmspace.h>
 #include <util/delay.h>
 
+#define LED_CONFIG_B(n)	(DDRB |= (1<<n))
+#define LED_ON_B(n)		(PORTB &= ~(1<<n))
+#define LED_OFF_B(n)		(PORTB |= (1<<n))
 #define LED_CONFIG_D(n)	(DDRD |= (1<<n))
 #define LED_ON_D(n)		(PORTD &= ~(1<<n))
 #define LED_OFF_D(n)		(PORTD |= (1<<n))
@@ -55,17 +58,21 @@ void handlebars(int onoff) {
 
 void backleft(int onoff) {
   if(onoff == ON) {
-    LED_ON_F(6);
+    LED_ON_B(0);
+    LED_ON_B(1);
   } else {
-    LED_OFF_F(6);
+    LED_OFF_B(0);
+    LED_OFF_B(1);
   }
 }
 
 void backright(int onoff) {
   if(onoff == ON) {
-    LED_ON_F(7);
+    LED_ON_B(2);
+    LED_ON_B(3);
   } else {
-    LED_OFF_F(7);
+    LED_OFF_B(2);
+    LED_OFF_B(3);
   }
 }
 
