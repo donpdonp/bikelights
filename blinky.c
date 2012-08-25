@@ -6,16 +6,21 @@
 #include <avr/pgmspace.h>
 #include <util/delay.h>
 
-#define LED_CONFIG_B(n)	(DDRB |= (1<<n))
-#define LED_ON_B(n)		(PORTB &= ~(1<<n))
-#define LED_OFF_B(n)		(PORTB |= (1<<n))
-#define LED_CONFIG_D(n)	(DDRD |= (1<<n))
+#define CONFIG_OUT_B(n) (DDRB |= (1<<n))
+#define CONFIG_IN_B(n) (DDRB &= ~(1<<n))
+#define LED_ON_B(n)   (PORTB &= ~(1<<n))
+#define LED_OFF_B(n)    (PORTB |= (1<<n))
+#define CONFIG_OUT_C(n) (DDRC |= (1<<n))
+#define CONFIG_IN_C(n) (DDRC &= ~(1<<n))
+#define LED_ON_C(n)   (PORTC &= ~(1<<n))
+#define LED_OFF_C(n)    (PORTC |= (1<<n))
+#define CONFIG_OUT_D(n)	(DDRD |= (1<<n))
 #define LED_ON_D(n)		(PORTD &= ~(1<<n))
 #define LED_OFF_D(n)		(PORTD |= (1<<n))
-#define LED_CONFIG_E(n)	(DDRE |= (1<<n))
+#define CONFIG_OUT_E(n)	(DDRE |= (1<<n))
 #define LED_ON_E(n)		(PORTE &= ~(1<<n))
 #define LED_OFF_E(n)		(PORTE |= (1<<n))
-#define LED_CONFIG_F(n)	(DDRF |= (1<<n))
+#define CONFIG_OUT_F(n)	(DDRF |= (1<<n))
 #define LED_ON_F(n)		(PORTF &= ~(1<<n))
 #define LED_OFF_F(n)		(PORTF |= (1<<n))
 #define CPU_PRESCALE(n)	(CLKPR = 0x80, CLKPR = (n))
@@ -23,56 +28,70 @@
 #define OFF		0
 #define TRI_RED			1
 #define TRI_GREEN		2
-#define TRI_ORANGE		3
+#define TRI_ORANGE	3
 
 void setup() {
 	// set for 16 MHz clock, and make sure the LED is off
 	CPU_PRESCALE(0);
-	LED_CONFIG_D(0);
-	LED_CONFIG_D(1);
-	LED_CONFIG_D(2);
-	LED_CONFIG_D(3);
-	LED_CONFIG_D(4);
-	LED_CONFIG_D(5);
-	LED_CONFIG_D(6);
-	LED_CONFIG_D(7);
-	LED_CONFIG_E(0);
-	LED_CONFIG_E(1);
-	LED_CONFIG_F(0);
-	LED_CONFIG_F(1);
-	LED_CONFIG_F(2);
-	LED_CONFIG_F(3);
-	LED_CONFIG_F(4);
-	LED_CONFIG_F(5);
-	LED_CONFIG_F(6);
-	LED_CONFIG_F(7);
+	CONFIG_OUT_B(0);
+	CONFIG_OUT_B(1);
+	CONFIG_OUT_B(2);
+  CONFIG_OUT_B(3);
+  CONFIG_IN_C(6);
+  LED_ON_C(6);
+	CONFIG_OUT_D(0);
+	CONFIG_OUT_D(1);
+	CONFIG_OUT_D(2);
+	CONFIG_OUT_D(3);
+	CONFIG_OUT_D(4);
+	CONFIG_OUT_D(5);
+	CONFIG_OUT_D(6);
+	CONFIG_OUT_D(7);
+	CONFIG_OUT_E(0);
+	CONFIG_OUT_E(1);
+	CONFIG_OUT_F(0);
+	CONFIG_OUT_F(1);
+	CONFIG_OUT_F(2);
+	CONFIG_OUT_F(3);
+	CONFIG_OUT_F(4);
+	CONFIG_OUT_F(5);
+	CONFIG_OUT_F(6);
+	CONFIG_OUT_F(7);
 }
 
 void handlebars(int onoff) {
   if(onoff == ON) {
-    LED_ON_D(4);
+    LED_ON_D(7);
   } else {
-    LED_OFF_D(4);
+    LED_OFF_D(7);
+  }
+}
+
+void onboardled(int onoff) {
+  if(onoff == ON) {
+    LED_ON_D(6);
+  } else {
+    LED_OFF_D(6);
   }
 }
 
 void backleft(int onoff) {
   if(onoff == ON) {
-    LED_ON_B(0);
-    LED_ON_B(1);
+    LED_ON_B(5);
+    LED_ON_B(6);
   } else {
-    LED_OFF_B(0);
-    LED_OFF_B(1);
+    LED_OFF_B(5);
+    LED_OFF_B(6);
   }
 }
 
 void backright(int onoff) {
   if(onoff == ON) {
-    LED_ON_B(2);
-    LED_ON_B(3);
+    LED_ON_B(5);
+    LED_ON_B(6);
   } else {
-    LED_OFF_B(2);
-    LED_OFF_B(3);
+    LED_OFF_B(5);
+    LED_OFF_B(6);
   }
 }
 
@@ -120,31 +139,35 @@ int main(void) {
 
 	// blink
 	while (1) {
-                handlebars(ON);
-                leftfork(TRI_RED);
-                rightfork(TRI_GREEN);
-                backleft(ON);
-                backright(ON);
-		_delay_ms(250);
+    if(PINC & (1<<6)) {
+      handlebars(ON);
+      leftfork(TRI_RED);
+      rightfork(TRI_GREEN);
+      backleft(ON);
+      backright(ON);
+      onboardled(OFF);
+  		_delay_ms(250);
 
-                leftfork(TRI_GREEN);
-                rightfork(TRI_RED);
-                backleft(ON);
-                backright(OFF);
-		_delay_ms(250);
+      leftfork(TRI_GREEN);
+      rightfork(TRI_RED);
+      backleft(ON);
+      backright(OFF);
+      onboardled(ON);
+  		_delay_ms(250);
 
-                leftfork(TRI_ORANGE);
-                rightfork(TRI_ORANGE);
-                backleft(OFF);
-                backright(ON);
-		_delay_ms(550);
+      leftfork(TRI_ORANGE);
+      rightfork(TRI_ORANGE);
+      backleft(OFF);
+      backright(ON);
+  		_delay_ms(550);
 
-                handlebars(OFF);
-                leftfork(OFF);
-                rightfork(OFF);
-                backleft(OFF);
-                backright(OFF);
-		_delay_ms(450);
+      handlebars(OFF);
+      leftfork(OFF);
+      rightfork(OFF);
+      backleft(OFF);
+      backright(OFF);
+  		_delay_ms(450);
+    }
 	}
 }
 
