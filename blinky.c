@@ -37,8 +37,9 @@ void setup() {
 	CONFIG_OUT_B(1);
 	CONFIG_OUT_B(2);
   CONFIG_OUT_B(3);
-  CONFIG_IN_C(6);
-  LED_ON_C(6);
+  CONFIG_OUT_B(4);
+  CONFIG_IN_C(6); // switch
+  LED_ON_C(6); // pullup resistor
 	CONFIG_OUT_D(0);
 	CONFIG_OUT_D(1);
 	CONFIG_OUT_D(2);
@@ -78,19 +79,15 @@ void onboardled(int onoff) {
 void backleft(int onoff) {
   if(onoff == ON) {
     LED_ON_B(5);
-    LED_ON_B(6);
   } else {
     LED_OFF_B(5);
-    LED_OFF_B(6);
   }
 }
 
 void backright(int onoff) {
   if(onoff == ON) {
-    LED_ON_B(5);
     LED_ON_B(6);
   } else {
-    LED_OFF_B(5);
     LED_OFF_B(6);
   }
 }
