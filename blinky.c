@@ -50,6 +50,7 @@ void setup() {
 	CONFIG_OUT_D(5);
 	CONFIG_OUT_D(6);
 	CONFIG_OUT_D(7);
+  LED_OFF_D(7); // lights out
 	CONFIG_OUT_E(0);
 	CONFIG_OUT_E(1);
 	CONFIG_OUT_F(0);
@@ -65,8 +66,10 @@ void setup() {
 void handlebars(int onoff) {
   if(onoff == ON) {
     LED_ON_D(7);
+    LED_ON_B(4);
   } else {
     LED_OFF_D(7);
+    LED_OFF_B(4);
   }
 }
 
