@@ -38,6 +38,8 @@ void setup() {
 	CONFIG_OUT_B(2);
   CONFIG_OUT_B(3);
   CONFIG_OUT_B(4);
+  CONFIG_OUT_B(5);
+  CONFIG_OUT_B(6);
   CONFIG_IN_C(6); // switch
   LED_ON_C(6); // pullup resistor
 	CONFIG_OUT_D(0);
