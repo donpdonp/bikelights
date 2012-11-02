@@ -36,12 +36,12 @@ Wired Pins 1-Nov-2012
 B4 - Rear rack green LED #1 (OK)
 B5 - Read rack green LED #2 (BAD)
 C6 IN- OnTube Toggle Switch
-C7 -
+C7 - Headlamp while LED (OK)
 D3 IN- OnTube Momentary Switch
 D4 - Handlebars blue LEDs (OK)
 D6 - Internal yellow LED
 D7 - Forks blue LEDs (OK)
-F7 - Headlamp while LED (BAD)
+F7 - (BAD)
 */
 
 void setup() {
@@ -56,6 +56,7 @@ void setup() {
   CONFIG_OUT_B(6);
   CONFIG_IN_C(6); // switch
   LED_ON_C(6); // pullup resistor
+  CONFIG_OUT_C(7);
 	CONFIG_OUT_D(0);
 	CONFIG_OUT_D(1);
 	CONFIG_OUT_D(2);
