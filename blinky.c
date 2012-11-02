@@ -38,10 +38,10 @@ B5 - Read rack green LED #2
 C6 IN- OnTube Toggle Switch
 C7 -
 D3 IN- OnTube Momentary Switch
-D4 - Handlebars white LED
+D4 - Handlebars blue LEDs
 D6 - Internal yellow LED
 D7 - Forks blue LEDs
-F7 -
+F7 - Headlamp while LED
 */
 
 void setup() {
@@ -75,6 +75,14 @@ void setup() {
 	CONFIG_OUT_F(5);
 	CONFIG_OUT_F(6);
 	CONFIG_OUT_F(7);
+}
+
+void headlamp(int onoff) {
+  if(onoff == ON) {
+    LED_ON_F(7);
+  } else {
+    LED_OFF_F(7);
+  }
 }
 
 void handlebars(int onoff) {
@@ -117,9 +125,9 @@ void backright(int onoff) {
   }
 }
 
-
 void all_off() {
   onboardled(OFF);
+  headlamp(OFF);
   handlebars(OFF);
   forks(OFF);
   backleft(OFF);
@@ -128,10 +136,12 @@ void all_off() {
 
 int main(void) {
 	setup();
+  all_off();
 
 	// blink
 	while (1) {
     if(PINC & (1<<6)) {
+      headlamp(ON);
       handlebars(ON);
       forks(ON);
       onboardled(ON);
@@ -143,19 +153,21 @@ int main(void) {
       _delay_ms(150);
 
       forks(ON);
+      handlebars(OFF);
       backleft(ON);
       backright(OFF);
       _delay_ms(250);
 
+      handlebars(ON);
       backleft(OFF);
       backright(ON);
       _delay_ms(250);
     } else {
       all_off();
       onboardled(ON);
-      _delay_ms(200);
+      _delay_ms(100);
       onboardled(OFF);
-      _delay_ms(200);
+      _delay_ms(100);
     }
 	}
 }
