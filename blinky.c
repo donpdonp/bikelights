@@ -8,22 +8,22 @@
 
 #define CONFIG_OUT_B(n) (DDRB |= (1<<n))
 #define CONFIG_IN_B(n) (DDRB &= ~(1<<n))
-#define LED_ON_B(n)   (PORTB &= ~(1<<n))
-#define LED_OFF_B(n)    (PORTB |= (1<<n))
+#define LED_OFF_B(n)   (PORTB &= ~(1<<n))
+#define LED_ON_B(n)    (PORTB |= (1<<n))
 #define CONFIG_OUT_C(n) (DDRC |= (1<<n))
 #define CONFIG_IN_C(n) (DDRC &= ~(1<<n))
-#define LED_ON_C(n)   (PORTC &= ~(1<<n))
-#define LED_OFF_C(n)    (PORTC |= (1<<n))
+#define LED_OFF_C(n)   (PORTC &= ~(1<<n))
+#define LED_ON_C(n)    (PORTC |= (1<<n))
 #define CONFIG_IN_D(n) (DDRD &= ~(1<<n))
 #define CONFIG_OUT_D(n)	(DDRD |= (1<<n))
-#define LED_ON_D(n)		(PORTD &= ~(1<<n))
-#define LED_OFF_D(n)		(PORTD |= (1<<n))
+#define LED_OFF_D(n)		(PORTD &= ~(1<<n))
+#define LED_ON_D(n)		(PORTD |= (1<<n))
 #define CONFIG_OUT_E(n)	(DDRE |= (1<<n))
-#define LED_ON_E(n)		(PORTE &= ~(1<<n))
-#define LED_OFF_E(n)		(PORTE |= (1<<n))
+#define LED_OFF_E(n)		(PORTE &= ~(1<<n))
+#define LED_ON_E(n)		(PORTE |= (1<<n))
 #define CONFIG_OUT_F(n)	(DDRF |= (1<<n))
-#define LED_ON_F(n)		(PORTF &= ~(1<<n))
-#define LED_OFF_F(n)		(PORTF |= (1<<n))
+#define LED_OFF_F(n)		(PORTF &= ~(1<<n))
+#define LED_ON_F(n)		(PORTF |= (1<<n))
 #define CPU_PRESCALE(n)	(CLKPR = 0x80, CLKPR = (n))
 #define ON		1
 #define OFF		0
@@ -33,15 +33,15 @@
 
 /*
 Wired Pins 1-Nov-2012
-B4 - Rear rack green LED #1
-B5 - Read rack green LED #2
+B4 - Rear rack green LED #1 (OK)
+B5 - Read rack green LED #2 (BAD)
 C6 IN- OnTube Toggle Switch
 C7 -
 D3 IN- OnTube Momentary Switch
-D4 - Handlebars blue LEDs
+D4 - Handlebars blue LEDs (OK)
 D6 - Internal yellow LED
-D7 - Forks blue LEDs
-F7 - Headlamp while LED
+D7 - Forks blue LEDs (OK)
+F7 - Headlamp while LED (BAD)
 */
 
 void setup() {
@@ -79,9 +79,9 @@ void setup() {
 
 void headlamp(int onoff) {
   if(onoff == ON) {
-    LED_ON_F(7);
+    LED_ON_C(7);
   } else {
-    LED_OFF_F(7);
+    LED_OFF_C(7);
   }
 }
 
@@ -140,11 +140,11 @@ int main(void) {
 
 	// blink
 	while (1) {
-    if(PINC & (1<<6)) {
+    //if(PINC & (1<<6)) {
+      onboardled(ON);
       headlamp(ON);
       handlebars(ON);
       forks(ON);
-      onboardled(ON);
       backleft(ON);
       backright(ON);
   		_delay_ms(250);
@@ -162,13 +162,6 @@ int main(void) {
       backleft(OFF);
       backright(ON);
       _delay_ms(250);
-    } else {
-      all_off();
-      onboardled(ON);
-      _delay_ms(100);
-      onboardled(OFF);
-      _delay_ms(100);
-    }
 	}
 }
 
