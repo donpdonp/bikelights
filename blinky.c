@@ -14,6 +14,7 @@
 #define CONFIG_IN_C(n) (DDRC &= ~(1<<n))
 #define LED_ON_C(n)   (PORTC &= ~(1<<n))
 #define LED_OFF_C(n)    (PORTC |= (1<<n))
+#define CONFIG_IN_D(n) (DDRD &= ~(1<<n))
 #define CONFIG_OUT_D(n)	(DDRD |= (1<<n))
 #define LED_ON_D(n)		(PORTD &= ~(1<<n))
 #define LED_OFF_D(n)		(PORTD |= (1<<n))
@@ -30,6 +31,19 @@
 #define TRI_GREEN		2
 #define TRI_ORANGE	3
 
+/*
+Wired Pins 1-Nov-2012
+B4 - Rear rack green LED #1
+B5 - Read rack green LED #2
+C6 IN- OnTube Toggle Switch
+C7 -
+D3 IN- OnTube Momentary Switch
+D4 - Handlebars white LED
+D6 - Internal yellow LED
+D7 - Forks blue LEDs
+F7 -
+*/
+
 void setup() {
 	// set for 16 MHz clock, and make sure the LED is off
 	CPU_PRESCALE(0);
@@ -45,12 +59,12 @@ void setup() {
 	CONFIG_OUT_D(0);
 	CONFIG_OUT_D(1);
 	CONFIG_OUT_D(2);
-	CONFIG_OUT_D(3);
+	CONFIG_IN_D(3); // switch
+  LED_ON_D(3); // pullup resistor
 	CONFIG_OUT_D(4);
 	CONFIG_OUT_D(5);
 	CONFIG_OUT_D(6);
 	CONFIG_OUT_D(7);
-  LED_OFF_D(7); // lights out
 	CONFIG_OUT_E(0);
 	CONFIG_OUT_E(1);
 	CONFIG_OUT_F(0);
@@ -65,11 +79,17 @@ void setup() {
 
 void handlebars(int onoff) {
   if(onoff == ON) {
+    LED_ON_D(4);
+  } else {
+    LED_OFF_D(4);
+  }
+}
+
+void forks(int onoff) {
+  if(onoff == ON) {
     LED_ON_D(7);
-    LED_ON_B(4);
   } else {
     LED_OFF_D(7);
-    LED_OFF_B(4);
   }
 }
 
@@ -91,49 +111,19 @@ void backleft(int onoff) {
 
 void backright(int onoff) {
   if(onoff == ON) {
-    LED_ON_B(6);
+    LED_ON_B(4);
   } else {
-    LED_OFF_B(6);
+    LED_OFF_B(4);
   }
 }
 
 
-void leftfork(int color) {
-  if(color == OFF) {
-		LED_OFF_D(2);
-		LED_OFF_D(3);
-  }
-  if(color == TRI_RED) {
-		LED_OFF_D(2);
-		LED_ON_D(3);
-  }
-  if(color == TRI_GREEN) {
-		LED_ON_D(2);
-		LED_OFF_D(3);
-  }
-  if(color == TRI_ORANGE) {
-		LED_ON_D(2);
-		LED_ON_D(3);
-  }
-}
-
-void rightfork(int color) {
-  if(color == OFF) {
-		LED_OFF_E(1);
-		LED_OFF_E(0);
-  }
-  if(color == TRI_RED) {
-		LED_OFF_E(1);
-		LED_ON_E(0);
-  }
-  if(color == TRI_GREEN) {
-		LED_ON_E(1);
-		LED_OFF_E(0);
-  }
-  if(color == TRI_ORANGE) {
-		LED_ON_E(1);
-		LED_ON_E(0);
-  }
+void all_off() {
+  onboardled(OFF);
+  handlebars(OFF);
+  forks(OFF);
+  backleft(OFF);
+  backright(OFF);
 }
 
 int main(void) {
@@ -143,34 +133,25 @@ int main(void) {
 	while (1) {
     if(PINC & (1<<6)) {
       handlebars(ON);
-      leftfork(TRI_RED);
-      rightfork(TRI_GREEN);
-      backleft(ON);
-      backright(ON);
-      onboardled(OFF);
-  		_delay_ms(250);
-
-      leftfork(TRI_GREEN);
-      rightfork(TRI_RED);
-      backleft(ON);
-      backright(OFF);
+      forks(ON);
       onboardled(ON);
+      backleft(ON);
+      backright(ON);
   		_delay_ms(250);
 
-      leftfork(TRI_ORANGE);
-      rightfork(TRI_ORANGE);
+      forks(OFF);
+      _delay_ms(150);
+
+      forks(ON);
+      backleft(ON);
+      backright(OFF);
+      _delay_ms(250);
+
       backleft(OFF);
       backright(ON);
-  		_delay_ms(550);
-
-      handlebars(OFF);
-      leftfork(OFF);
-      rightfork(OFF);
-      backleft(OFF);
-      backright(OFF);
-  		_delay_ms(450);
+      _delay_ms(250);
     } else {
-      LED_OFF_D(7); // lights out
+      all_off();
       onboardled(ON);
       _delay_ms(200);
       onboardled(OFF);
