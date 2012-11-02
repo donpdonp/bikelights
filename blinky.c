@@ -1,4 +1,4 @@
-/* LED Blink Example with USB Debug Channel for Teensy USB Development Board
+/* LED Bike Blirker for Teensy ATMEL Board
  * http://www.pjrc.com/teensy/
  */
 
@@ -169,6 +169,12 @@ int main(void) {
       backleft(OFF);
       backright(OFF);
   		_delay_ms(450);
+    } else {
+      LED_OFF_D(7); // lights out
+      onboardled(ON);
+      _delay_ms(200);
+      onboardled(OFF);
+      _delay_ms(200);
     }
 	}
 }
