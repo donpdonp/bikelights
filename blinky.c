@@ -140,7 +140,7 @@ int main(void) {
 
 	// blink
 	while (1) {
-    //if(PINC & (1<<6)) {
+    if(PINC & (1<<6)) {
       onboardled(ON);
       headlamp(ON);
       handlebars(ON);
@@ -162,6 +162,13 @@ int main(void) {
       backleft(OFF);
       backright(ON);
       _delay_ms(250);
+    } else {
+      all_off();
+      onboardled(ON);
+      _delay_ms(250);
+      onboardled(OFF);
+      _delay_ms(250);
+    }
 	}
 }
 
