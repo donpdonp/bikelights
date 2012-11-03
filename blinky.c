@@ -33,15 +33,21 @@
 
 /*
 Wired Pins 1-Nov-2012
-B4 - Rear rack green LED #1 (OK)
-B5 - Read rack green LED #2 (BAD)
-C6 IN- OnTube Toggle Switch
-C7 - Headlamp while LED (OK)
-D3 IN- OnTube Momentary Switch
-D4 - Handlebars blue LEDs (OK)
-D6 - Internal yellow LED
-D7 - Forks blue LEDs (OK)
-F7 - (BAD)
+B3 W- Headlamp white
+B4 W- Rear rack green LED #1 (OK)
+B5 W- Rear left red (PWM)
+B6 W- Rear left green (PWM)
+B7 W- Rear left blue (PWM)
+C6 W- Rear right red (PWM)
+C7 W- Rear right green (PWM)
+D1 W- Forks
+D2 W- Handlebar ends
+D3 W- Switch OnTube Momentary
+D4 W- Handlebars blue LEDs (OK)
+D5 W- Switch OnTube Toggle
+D6 W- Internal yellow LED
+D7 W- Rear right blue (PWM)
+F7 W- (BAD)
 */
 
 void setup() {
@@ -54,8 +60,8 @@ void setup() {
   CONFIG_OUT_B(4);
   CONFIG_OUT_B(5);
   CONFIG_OUT_B(6);
-  CONFIG_IN_C(6); // switch
-  LED_ON_C(6); // pullup resistor
+  CONFIG_OUT_B(7);
+  CONFIG_OUT_C(6);
   CONFIG_OUT_C(7);
 	CONFIG_OUT_D(0);
 	CONFIG_OUT_D(1);
@@ -63,42 +69,34 @@ void setup() {
 	CONFIG_IN_D(3); // switch
   LED_ON_D(3); // pullup resistor
 	CONFIG_OUT_D(4);
-	CONFIG_OUT_D(5);
+  CONFIG_IN_D(5); // switch
+  LED_ON_D(5); // pullup resistor
 	CONFIG_OUT_D(6);
 	CONFIG_OUT_D(7);
-	CONFIG_OUT_E(0);
-	CONFIG_OUT_E(1);
-	CONFIG_OUT_F(0);
-	CONFIG_OUT_F(1);
-	CONFIG_OUT_F(2);
-	CONFIG_OUT_F(3);
-	CONFIG_OUT_F(4);
-	CONFIG_OUT_F(5);
-	CONFIG_OUT_F(6);
 	CONFIG_OUT_F(7);
 }
 
 void headlamp(int onoff) {
   if(onoff == ON) {
-    LED_ON_C(7);
+    LED_ON_B(3);
   } else {
-    LED_OFF_C(7);
+    LED_OFF_B(3);
   }
 }
 
 void handlebars(int onoff) {
   if(onoff == ON) {
-    LED_ON_D(4);
+    LED_ON_D(2);
   } else {
-    LED_OFF_D(4);
+    LED_OFF_D(2);
   }
 }
 
 void forks(int onoff) {
   if(onoff == ON) {
-    LED_ON_D(7);
+    LED_ON_D(1);
   } else {
-    LED_OFF_D(7);
+    LED_OFF_D(1);
   }
 }
 
@@ -107,6 +105,14 @@ void onboardled(int onoff) {
     LED_ON_D(6);
   } else {
     LED_OFF_D(6);
+  }
+}
+
+void rack(int onoff) {
+  if(onoff == ON) {
+    LED_ON_B(4);
+  } else {
+    LED_OFF_B(4);
   }
 }
 
@@ -120,9 +126,9 @@ void backleft(int onoff) {
 
 void backright(int onoff) {
   if(onoff == ON) {
-    LED_ON_B(4);
+    LED_ON_C(6);
   } else {
-    LED_OFF_B(4);
+    LED_OFF_C(6);
   }
 }
 
@@ -131,6 +137,7 @@ void all_off() {
   headlamp(OFF);
   handlebars(OFF);
   forks(OFF);
+  rack(OFF);
   backleft(OFF);
   backright(OFF);
 }
@@ -148,15 +155,18 @@ int main(void) {
       forks(ON);
       backleft(ON);
       backright(ON);
+      rack(OFF);
   		_delay_ms(250);
 
       forks(OFF);
+      rack(ON);
       _delay_ms(150);
 
       forks(ON);
       handlebars(OFF);
       backleft(ON);
       backright(OFF);
+      rack(OFF);
       _delay_ms(250);
 
       handlebars(ON);
