@@ -35,7 +35,7 @@
 Wired Pins 1-Nov-2012
 B3 W- Headlamp white
 B4 W- Rear rack green LED #1 (OK)
-B5 W- Rear left red (PWM)
+B5 W- Rear left red (PWM) (BAD)
 B6 W- Rear left green (PWM)
 B7 W- Rear left blue (PWM)
 C6 W- Rear right red (PWM)
@@ -119,16 +119,24 @@ void rack(int onoff) {
 void backleft(int onoff) {
   if(onoff == ON) {
     LED_ON_B(5);
+    LED_ON_B(6);
+    LED_ON_B(7);
   } else {
     LED_OFF_B(5);
+    LED_OFF_B(6);
+    LED_OFF_B(7);
   }
 }
 
 void backright(int onoff) {
   if(onoff == ON) {
     LED_ON_C(6);
+    LED_ON_C(7);
+    LED_ON_D(7);
   } else {
     LED_OFF_C(6);
+    LED_OFF_C(7);
+    LED_OFF_D(7);
   }
 }
 
@@ -148,7 +156,7 @@ int main(void) {
 
 	// blink
 	while (1) {
-    if(PINC & (1<<6)) {
+    if(PIND & (1<<5)) {
       onboardled(ON);
       headlamp(ON);
       handlebars(ON);
