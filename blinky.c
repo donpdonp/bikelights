@@ -34,7 +34,7 @@
 /*
 Wired Pins 1-Nov-2012
 B3 W- Headlamp white
-B4 W- Rear rack green LED #1 (OK)
+B4 W- Rear rack green LED #1
 B5 W- Rear left red (PWM) (BAD)
 B6 W- Rear left green (PWM)
 B7 W- Rear left blue (PWM)
@@ -43,7 +43,7 @@ C7 W- Rear right green (PWM)
 D1 W- Forks
 D2 W- Handlebar ends
 D3 W- Switch OnTube Momentary
-D4 W- Handlebars blue LEDs (OK)
+D4 W- Handlebars blue LEDs
 D5 W- Switch OnTube Toggle
 D6 W- Internal yellow LED
 D7 W- Rear right blue (PWM)
