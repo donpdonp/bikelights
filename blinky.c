@@ -51,8 +51,9 @@ F7 W- (BAD)
 */
 
 void setup() {
-	// set for 16 MHz clock, and make sure the LED is off
-	CPU_PRESCALE(0);
+   
+  CPU_PRESCALE(0x03);
+
 	CONFIG_OUT_B(0);
 	CONFIG_OUT_B(1);
 	CONFIG_OUT_B(2);
