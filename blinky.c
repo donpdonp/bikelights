@@ -54,9 +54,9 @@ void setup() {
    
   CPU_PRESCALE(0x03);
 
-	CONFIG_OUT_B(0);
-	CONFIG_OUT_B(1);
-	CONFIG_OUT_B(2);
+  CONFIG_OUT_B(0);
+  CONFIG_OUT_B(1);
+  CONFIG_OUT_B(2);
   CONFIG_OUT_B(3);
   CONFIG_OUT_B(4);
   CONFIG_OUT_B(5);
@@ -64,17 +64,17 @@ void setup() {
   CONFIG_OUT_B(7);
   CONFIG_OUT_C(6);
   CONFIG_OUT_C(7);
-	CONFIG_OUT_D(0);
-	CONFIG_OUT_D(1);
-	CONFIG_OUT_D(2);
-	CONFIG_IN_D(3); // switch
+  CONFIG_OUT_D(0);
+  CONFIG_OUT_D(1);
+  CONFIG_OUT_D(2);
+  CONFIG_IN_D(3); // switch
   LED_ON_D(3); // pullup resistor
-	CONFIG_OUT_D(4);
+  CONFIG_OUT_D(4);
   CONFIG_IN_D(5); // switch
   LED_ON_D(5); // pullup resistor
-	CONFIG_OUT_D(6);
-	CONFIG_OUT_D(7);
-	CONFIG_OUT_F(7);
+  CONFIG_OUT_D(6);
+  CONFIG_OUT_D(7);
+  CONFIG_OUT_F(7);
 }
 
 void headlamp(int onoff) {
@@ -152,11 +152,11 @@ void all_off() {
 }
 
 int main(void) {
-	setup();
+  setup();
   all_off();
 
-	// blink
-	while (1) {
+  // blink
+  while (1) {
     if(PIND & (1<<5)) {
       onboardled(ON);
       headlamp(ON);
@@ -165,7 +165,7 @@ int main(void) {
       backleft(ON);
       backright(ON);
       rack(OFF);
-  		_delay_ms(250);
+      _delay_ms(250);
 
       forks(OFF);
       rack(ON);
@@ -189,6 +189,6 @@ int main(void) {
       onboardled(OFF);
       _delay_ms(250);
     }
-	}
+  }
 }
 
