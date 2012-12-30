@@ -150,6 +150,7 @@ void all_off() {
   backright(OFF);
 }
 
+// todo: timer to wake up from idle
 void idle() {
   set_sleep_mode(SLEEP_MODE_IDLE);
   cli();
@@ -159,9 +160,65 @@ void idle() {
   sleep_disable();
 }
 
+// blink each light individually once
+void around_the_world() {
+  int delay = 100;
+
+  LED_ON_B(3);
+  _delay_ms(delay);
+  LED_OFF_B(3);
+  _delay_ms(delay);
+  LED_ON_B(4);
+  _delay_ms(delay);
+  LED_OFF_B(4);
+  _delay_ms(delay);
+  LED_ON_B(5);
+  _delay_ms(delay);
+  LED_OFF_B(5);
+  _delay_ms(delay);
+  LED_ON_B(6);
+  _delay_ms(delay);
+  LED_OFF_B(6);
+  _delay_ms(delay);
+  LED_ON_B(7);
+  _delay_ms(delay);
+  LED_OFF_B(7);
+  _delay_ms(delay);
+  LED_ON_C(6);
+  _delay_ms(delay);
+  LED_OFF_C(6);
+  _delay_ms(delay);
+  LED_ON_C(7);
+  _delay_ms(delay);
+  LED_OFF_C(7);
+  _delay_ms(delay);
+  LED_ON_D(1);
+  _delay_ms(delay);
+  LED_OFF_D(1);
+  _delay_ms(delay);
+  LED_ON_D(2);
+  _delay_ms(delay);
+  LED_OFF_D(2);
+  _delay_ms(delay);
+  LED_ON_D(4);
+  _delay_ms(delay);
+  LED_OFF_D(4);
+  _delay_ms(delay);
+  LED_ON_D(6);
+  _delay_ms(delay);
+  LED_OFF_D(6);
+  _delay_ms(delay);
+  LED_ON_D(7);
+  _delay_ms(delay);
+  LED_OFF_D(7);
+  _delay_ms(delay);
+
+}
+
 int main(void) {
   setup();
   all_off();
+  around_the_world();
 
   // blink
   while (1) {
