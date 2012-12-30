@@ -42,7 +42,7 @@ C7 W- Rear right green (PWM)
 D1 W- Forks
 D2 W- Handlebar ends
 D3 W- Switch OnTube Momentary
-D4 W- Handlebars blue LEDs
+D4 W- Ultraviolet
 D5 W- Switch OnTube Toggle
 D6 W- Internal yellow LED
 D7 W- Rear right blue (PWM)
@@ -74,6 +74,14 @@ void setup() {
   CONFIG_OUT_D(6);
   CONFIG_OUT_D(7);
   CONFIG_OUT_F(7);
+}
+
+void ultraviolet(int onoff) {
+  if(onoff == ON) {
+    LED_ON_D(4);
+  } else {
+    LED_OFF_D(4);
+  }
 }
 
 void headlamp(int onoff) {
@@ -160,71 +168,70 @@ void idle() {
   sleep_disable();
 }
 
+void flash_b(int num) {
+  int delay = 80;
+  int count = 3;
+
+  for(int i=0; i<count; i++) {
+    LED_ON_B(num);
+    _delay_ms(delay);
+    LED_OFF_B(num);
+    _delay_ms(delay);
+  }
+}
+
+void flash_c(int num) {
+  int delay = 80;
+  int count = 3;
+
+  for(int i=0; i<count; i++) {
+    LED_ON_C(num);
+    _delay_ms(delay);
+    LED_OFF_C(num);
+    _delay_ms(delay);
+  }
+}
+
+void flash_d(int num) {
+  int delay = 80;
+  int count = 3;
+
+  for(int i=0; i<count; i++) {
+    LED_ON_D(num);
+    _delay_ms(delay);
+    LED_OFF_D(num);
+    _delay_ms(delay);
+  }
+}
+
 // blink each light individually once
 void around_the_world() {
-  int delay = 100;
-
-  LED_ON_B(3);
-  _delay_ms(delay);
-  LED_OFF_B(3);
-  _delay_ms(delay);
-  LED_ON_B(4);
-  _delay_ms(delay);
-  LED_OFF_B(4);
-  _delay_ms(delay);
-  LED_ON_B(5);
-  _delay_ms(delay);
-  LED_OFF_B(5);
-  _delay_ms(delay);
-  LED_ON_B(6);
-  _delay_ms(delay);
-  LED_OFF_B(6);
-  _delay_ms(delay);
-  LED_ON_B(7);
-  _delay_ms(delay);
-  LED_OFF_B(7);
-  _delay_ms(delay);
-  LED_ON_C(6);
-  _delay_ms(delay);
-  LED_OFF_C(6);
-  _delay_ms(delay);
-  LED_ON_C(7);
-  _delay_ms(delay);
-  LED_OFF_C(7);
-  _delay_ms(delay);
-  LED_ON_D(1);
-  _delay_ms(delay);
-  LED_OFF_D(1);
-  _delay_ms(delay);
-  LED_ON_D(2);
-  _delay_ms(delay);
-  LED_OFF_D(2);
-  _delay_ms(delay);
-  LED_ON_D(4);
-  _delay_ms(delay);
-  LED_OFF_D(4);
-  _delay_ms(delay);
-  LED_ON_D(6);
-  _delay_ms(delay);
-  LED_OFF_D(6);
-  _delay_ms(delay);
-  LED_ON_D(7);
-  _delay_ms(delay);
-  LED_OFF_D(7);
-  _delay_ms(delay);
-
+  flash_b(3);
+  flash_b(4);
+  flash_b(5);
+  flash_b(6);
+  flash_b(7);
+  flash_c(6);
+  flash_c(7);
+  flash_d(1);
+  flash_d(2);
+  flash_d(4);
+  flash_d(7);
 }
 
 int main(void) {
   setup();
   all_off();
+  onboardled(ON);
   around_the_world();
 
   // blink
   while (1) {
     if(PIND & (1<<5)) {
       onboardled(ON);
+      ultraviolet(ON);
       headlamp(ON);
+
       handlebars(ON);
       forks(ON);
       backleft(ON);
