@@ -150,6 +150,7 @@ void backright(int onoff) {
 
 void all_off() {
   onboardled(OFF);
+  ultraviolet(OFF);
   headlamp(OFF);
   handlebars(OFF);
   forks(OFF);
@@ -254,12 +255,12 @@ int main(void) {
       backleft(OFF);
       backright(ON);
       _delay_ms(250);
-    } else {
+    } else  {
       all_off();
       onboardled(ON);
-      _delay_ms(250);
+      _delay_ms(350);
       onboardled(OFF);
-      _delay_ms(250);
+      _delay_ms(350);
     }
   }
 }

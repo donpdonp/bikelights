@@ -7,15 +7,23 @@ Position        LEDs         Teensy PIN
 On-Board       Orange        D6
 Teensy
 
-In front of    White         D4
-Handlebars     White         D4
+Handlebar      White         B3
+Headlamp
 
-Front fork,    Tri:green     D2
-left side      Tri:red       D3
+Forks          Blue          D1
 
-Front fork,    Tri:green     E1
-right side     Tri:red       E0
+Handlebar      Blue          D2
+Ends
 
-Top-back of    Red left      F6
-bucket         Red right     F7
+Back           Ultraviolet   D4
 
+Back left      Red           B5(bad)
+               Green         B6
+               Blue          B7
+
+Back right     Red           C6
+               Green         C7
+               Blue          D7
+
+Bucket         Green         B4
+Underneath
