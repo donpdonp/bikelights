@@ -4,6 +4,8 @@
 
 #include <avr/io.h>
 #include <avr/pgmspace.h>
+#include <avr/sleep.h>
+#include <avr/interrupt.h>
 #include <util/delay.h>
 
 #define CONFIG_OUT_B(n) (DDRB |= (1<<n))
@@ -27,9 +29,6 @@
 #define CPU_PRESCALE(n)	(CLKPR = 0x80, CLKPR = (n))
 #define ON		1
 #define OFF		0
-#define TRI_RED			1
-#define TRI_GREEN		2
-#define TRI_ORANGE	3
 
 /*
 Wired Pins 1-Nov-2012
@@ -51,7 +50,7 @@ F7 W- (BAD)
 */
 
 void setup() {
-   
+
   CPU_PRESCALE(0x03);
 
   CONFIG_OUT_B(0);
@@ -149,6 +148,15 @@ void all_off() {
   rack(OFF);
   backleft(OFF);
   backright(OFF);
+}
+
+void idle() {
+  set_sleep_mode(SLEEP_MODE_IDLE);
+  cli();
+  sleep_enable();
+  sei();
+  sleep_cpu();
+  sleep_disable();
 }
 
 int main(void) {
